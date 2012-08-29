@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.zz.po.Group" table="jbpm_group">
+		<id name="id" type="java.lang.String">
+			<column name="gid" />
+			<generator class="uuid" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="name" length="30" />
+		</property>
+		<property name="type" type="java.lang.String">
+			<column name="type" length="30" />
+		</property>
+		<set name="users" table="jbpm_membership" cascade="save-update">
+			<key column="gid" />
+			<many-to-many class="com.zz.po.User" column="uid"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>

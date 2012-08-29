@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process name="leave" xmlns="http://jbpm.org/4.4/jpdl">
+	<start g="40,48,48,48" name="start1">
+		<transition g="-22,-102" name="开始" to="填写请假申请" />
+	</start>
+	<end g="346,289,48,48" name="end1" />
+	<task assignee="${userId}" form="leave/index.jsp" g="23,159,92,52"
+		name="填写请假申请">
+		<transition g="-44,-18" name="to task2" to="项目经理审批" />
+	</task>
+	<task assignee="${manager}" form="jbpm/approvePage.action" g="24,280,92,52"
+		name="项目经理审批">
+		<transition g="-68,-18" name="to exclusive1" to="exclusive1" />
+	</task>
+	<task assignee="${boss}" form="jbpm/approvePage.action" g="608,145,92,52"
+		name="老板审批">
+		<transition g="-42,-18" name="to end1" to="end1" />
+	</task>
+	<decision g="234,140,48,48" name="exclusive1"
+		expr="#{days >= 3 ? 'to 老板审批' : 'to end1'}">
+		<transition g="-47,-17" name="to end1" to="end1">
+		</transition>
+		<transition g="-47,-17" name="to 老板审批" to="老板审批">
+		</transition>
+	</decision>
+</process>
